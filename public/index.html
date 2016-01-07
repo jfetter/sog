@@ -4,13 +4,15 @@
 	<meta charset="UTF-8">
 	<title>TEMPORARY HOME</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body ng-app="sog">
-	<nav-bar></nav-bar>
 
-	<div ui-view></div>
-	
-	
+	<div class="container">
+		<nav-bar></nav-bar>
+		<div ui-view></div>
+	</div>
+
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
