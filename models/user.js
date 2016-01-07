@@ -8,6 +8,7 @@ let userSchema = new Schema({
   password: { type: String, require: true },
   name: { type: String, require: true },
   address: { type: String, require: true },
+  phone: {type: String, require: true },
   avatar: {type: String , require: false}
 })
 
