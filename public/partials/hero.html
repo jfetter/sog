@@ -1,3 +1,5 @@
-<div class="col-sm-12">
-	<button ng-click="launchForm()">Register</button>
-</div>
+
+	<span ng-repeat="image in images track by $index">
+		<img ng-src={{image}} alt="">
+	</span>
+	<button ng-click="launchForm()">Poke</button>
