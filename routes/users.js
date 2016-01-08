@@ -34,6 +34,14 @@ router.get('/:id', (req, res) => {
   });
 });
 
+router.post('/currentUser', (req, res) => {
+  var decoded = jwt.decode(req.body.userToken, 'secret');
+  User.findById(decoded.sub, (err, user) => {
+    user.password = null;
+    res.status(err ? 400:200).send(err || user)
+  });
+});
+
 router.post('/register', (req, res) => {
   let user = new User(req.body);
   user.save((err, savedUser) => {
