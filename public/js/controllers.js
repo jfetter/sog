@@ -68,7 +68,7 @@ angular.module("sog")
   };
 })
 
-.controller('userFormCtrl', function ($rootScope,$scope, $window) {
+.controller('userFormCtrl', function ($rootScope,$scope, $window,$http) {
 
 	// upload image and base64 encode
 	$scope.imageStrings = [];
@@ -94,7 +94,13 @@ $scope.submit = function () {
 		avatar:$scope.imageStrings[0]
 	}
 
-	console.log($scope.email,$scope.password,$scope.password2,$scope.name,$scope.address,$scope.phone, $scope.imageStrings[0]);
+	$http('/user/register', newUser)
+	.then(function (res) {
+		console.log(res);
+	},function (err) {
+		if(err) console.log(err);
+	})
+
 }
 
 
