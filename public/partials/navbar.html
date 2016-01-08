@@ -1,6 +1,6 @@
-<div class= "navi">
-	<div ng-controller="profileCtrl">
-		<form  ng-show="users.length > 0"class="navbar-form navbar-left well" role="search">
+<div class= "navi row">
+	<div ng-controller="profileCtrl" class="col-sm-6 col-sm-offset-6">
+		<form  ng-if="users" class="navbar-form navbar-left well" role="search">
 		  <div class="nav-prof form-group">
 		    <input type="text" class="form-control" placeholder="Search">
 		  </div>
@@ -9,7 +9,7 @@
 	</div>
 
 	<div ng-controller="homeCtrl" >
-		<form  ng-if="images" class="nav-home navbar-form navbar-left" >
+		<form  ng-if="false" class="nav-home navbar-form navbar-left" >
 		  <log-in />
 		</form>
 	</div>
