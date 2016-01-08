@@ -3,16 +3,6 @@
 angular.module("sog")
 
 .controller("homeCtrl", function($scope, $http, $uibModal, $log){
-	console.log("inside home ctrl")
-
-	$scope.login = function(){
-		$http({
-			method: "POST",
-			url: "/user/login"
-		}).then(function(user){
-			 console.log(user);
-		})
-	}
 
 	$scope.images = [];
 
@@ -21,7 +11,6 @@ angular.module("sog")
 			method: "GET",
 			url: "http://uifaces.com/api/v1/random"
 				}).then(function(faces){
-					console.log(faces.data.image_urls.epic)
 				//find page-view-width and insert button at [index] page-view-width/128
 				$scope.images.push(faces.data.image_urls.epic)
 
@@ -77,6 +66,26 @@ angular.module("sog")
   };
 })
 
+
+
+.controller('loginCtrl', function ($scope, $http) {
+
+	$scope.submitLogin = function(){
+		console.log('login fired');
+		let userData = {}
+				userData.email = $scope.loginEmail
+				userData.password = $scope.loginPassword
+
+		$http.post('/user/login', userData)
+		.then(function(user){
+			 console.log(user);
+		},function (err) {
+			console.log(err);
+		})
+	}
+})
+
+
 .controller('userFormCtrl', function ($rootScope,$scope, $window,$http) {
 
 	// upload image and base64 encode
@@ -118,7 +127,6 @@ $scope.submit = function () {
 })
 
 .controller("profileCtrl", function($scope, $http){
-	console.log("in profile ctrl")
 	$scope.users;
 
 	$http({
