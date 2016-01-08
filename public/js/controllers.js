@@ -2,14 +2,10 @@
 
 angular.module("sog")
 
-.controller("homeCtrl", function($scope, $http){
+.controller("homeCtrl", function($scope, $http, $uibModal, $log){
 	console.log("inside home ctrl")
 	$scope.images = [];
 
-	//request random faces to populate background grid
-	// need to repeat request x times per row
-	// and repeat request for every row
-	// also need to appropriately size response
 	for(var i=0; i < 50; i ++){
 		$http({
 			method: "GET",

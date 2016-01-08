@@ -32,3 +32,14 @@ angular.module("sog")
   };
 })
 
+.directive('logIn', function(){
+  return{
+    templateUrl: "partials/log-in.html"
+  }
+})
+
+.directive('userForm', function(){
+  return{
+    templateUrl: "partials/user-form.html"
+  }
+})
