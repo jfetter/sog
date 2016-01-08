@@ -21,7 +21,6 @@ angular.module("sog")
 		}) 
 	}
 
-
   $scope.animationsEnabled = true;
 
   $scope.open = function (size) {
@@ -48,11 +47,21 @@ angular.module("sog")
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+	$scope.login = false;
+	$scope.register = false; 
 
-  $scope.submit = function () {
-    console.log("submit clicked")
-    //$uibModalInstance.close();
-  };
+	$scope.showLogin = function(){
+  		$scope.login = !$scope.login;
+  		$scope.register = false;
+  	}	
+  
+
+  $scope.showReg = function(){
+  	$scope.register = !$scope.register;
+  	$scope.login = false;
+  	}	
+ 
+
   $scope.cancel = function () {
   	console.log("cancel clicked")
     $uibModalInstance.dismiss('cancel');
