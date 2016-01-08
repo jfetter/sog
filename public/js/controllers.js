@@ -72,14 +72,16 @@ angular.module("sog")
 .controller('loginCtrl', function ($scope, $http) {
 
 	$scope.submitLogin = function(){
-		console.log('login fired');
+
 		let userData = {}
 				userData.email = $scope.loginEmail
 				userData.password = $scope.loginPassword
+		console.log('login fired', userData);
 
 		$http.post('/user/login', userData)
 		.then(function(user){
-			 console.log(user);
+			localStorage.setItem('token', JSON.stringify(user.data.token));
+			localStorage.setItem('user', JSON.stringify(user.data.user));
 		},function (err) {
 			console.log(err);
 		})
@@ -125,6 +127,9 @@ angular.module("sog")
 })
 
 .controller("profileCtrl", function($scope, $http){
+
+	$scope.user = JSON.parse(localStorage.getItem('user'));
+
 	$scope.users;
 
 	$http({

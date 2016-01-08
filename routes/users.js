@@ -18,6 +18,10 @@ function createJWT(user) {
   return jwt.encode(payload, 'secret');
 }
 
+/* \\\\\\\\\\Export me and import me plz\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
     res.status(err ? 400:200).send(err || users)
@@ -33,15 +37,26 @@ router.get('/:id', (req, res) => {
 router.post('/register', (req, res) => {
   let user = new User(req.body);
   user.save((err, savedUser) => {
-    savedUser.password = '';
-    res.status(err ? 400:200).send(err || { token: createJWT(savedUser) });
+    res.status(err ? 400:200).send(err || savedUser);
   });
 });
 
 router.post('/login', (req, res) => {
-  User.find({email: req.body.email}, (err, user) => {
-    res.status(err ? 400:200).send(err || user);
-    })
+  User.findOne({ email: req.body.email },'password', function(err, user) {
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid email and/or password' });
+    }
+    user.comparePassword(req.body.password, function(err, isMatch) {
+      if (!isMatch) {
+        return res.status(401).send({ message: 'Invalid email and/or password' });
+      }
+      User.findOne({email: req.body.email}, function (err, userData) {
+        userData.password = ''
+        res.status(err ? 400:200).send(err || {user: userData, token: createJWT(user) });
+      })
+
+    });
+  });
 });
 
 router.put('/update/:id', (req, res) => {

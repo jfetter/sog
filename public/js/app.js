@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate","flow"])
+angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate","flow","ngStorage"])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider){
 	$locationProvider.html5Mode({
