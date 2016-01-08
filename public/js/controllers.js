@@ -84,17 +84,19 @@ angular.module("sog")
 };
 
 $scope.submit = function () {
+	console.log('submiting');
+	let newUser = {}
 
-	let newUser = {
-		email:$scope.email,
-		password:$scope.password,
-		name:$scope.name,
-		address:$scope.address,
-		phone:$scope.phone,
-		avatar:$scope.imageStrings[0]
-	}
+		newUser.email = $scope.email,
+		newUser.password = $scope.password,
+		newUser.name = $scope.name,
+		newUser.address = $scope.address,
+		newUser.phone = $scope.phone,
+		newUser.avatar = $scope.imageStrings
 
-	$http('/user/register', newUser)
+			console.log(newUser);
+
+	$http.post('/user/register', newUser ,null)
 	.then(function (res) {
 		console.log(res);
 	},function (err) {
