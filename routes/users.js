@@ -21,6 +21,14 @@ router.post('/register', (req, res) => {
   });
 });
 
+router.post('/login', (req, res) => {
+  User.find({email: req.body.email}, (err, user) => {  
+    user.save((err, savedUser) => {
+    res.status(err ? 400:200).send(err || savedUser);
+    })
+  }) 
+});
+
 router.put('/update/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
     res.status(err ? 400:200).send(err || req.body);

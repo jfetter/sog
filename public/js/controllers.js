@@ -4,8 +4,17 @@ angular.module("sog")
 
 .controller("homeCtrl", function($scope, $http, $uibModal, $log){
 	console.log("inside home ctrl")
+
+	$scope.login = function(){
+		$http({
+			method: "POST",
+			url: "/user/login"
+		}).then(function(user){
+			 console.log(user);
+		})
+	}
+
 	$scope.images = [];
-	var items = ["item1", "item2", "item3"];
 
 	for(var i=0; i < 5; i ++){
 		$http({
@@ -109,6 +118,7 @@ $scope.submit = function () {
 })
 
 .controller("profileCtrl", function($scope, $http){
+	console.log("in profile ctrl")
 	$scope.users;
 
 	$http({

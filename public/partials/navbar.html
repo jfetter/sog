@@ -1,10 +1,14 @@
-<form  class="navbar-form navbar-left" role="search">
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Search">
-  </div>
-  <a href="#">Logout</a>
-</form>
+<div ng-controller="profileCtrl">
+	<form  ng-show="users.length > 0"class="navbar-form navbar-left" role="search">
+	  <div class="nav-prof form-group">
+	    <input type="text" class="form-control" placeholder="Search">
+	  </div>
+	  <a href="#">Logout</a>
+	</form>
+</div>
 
-<form  class="navbar-form navbar-left" >
-  <log-in />
-</form>
+<div ng-controller="homeCtrl" >
+	<form  ng-if="images" class="nav-home navbar-form navbar-left" >
+	  <log-in />
+	</form>
+</div>
