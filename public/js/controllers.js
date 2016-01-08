@@ -108,7 +108,18 @@ $scope.submit = function () {
 
 })
 
-.controller("profileCtrl", function($scope){
-	console.log("inside profile ctrl")
-	$scope.title = "PROFILE!!!!!!"
+.controller("profileCtrl", function($scope, $http){
+	$scope.users;
+
+	$http({
+		type:'GET',
+		url:'/user/all'
+	})
+	.then(function (res) {
+		$scope.users = res.data
+	},function (err) {
+		console.log(err);
+	})
+
+
 })

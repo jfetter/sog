@@ -2,6 +2,12 @@ import express from "express";
 import User from "../models/user";
 const router = express.Router();
 
+router.get('/all', (req, res) => {
+  User.find({}, (err, users) => {
+    res.status(err ? 400:200).send(err || users)
+  });
+});
+
 router.get('/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
     res.status(err ? 400:200).send(err || user)
