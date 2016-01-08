@@ -1,0 +1,23 @@
+
+
+
+.navi{
+	background-color: blue;
+}
+
+.home-body{
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../images/ui-faces.png");
+}
+
+/*@media (max-width: 480px){*/
+.modal-button{
+	top: 35%;
+	left: 40%;
+	position: absolute;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	}
+/*}*/
