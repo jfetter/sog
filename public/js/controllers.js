@@ -49,10 +49,12 @@ angular.module("sog")
 // It is not the same as the $uibModal service used above.
 .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
 
-  $scope.ok = function () {
-    $uibModalInstance.close();
+  $scope.submit = function () {
+    console.log("submit clicked")
+    //$uibModalInstance.close();
   };
   $scope.cancel = function () {
+  	console.log("cancel clicked")
     $uibModalInstance.dismiss('cancel');
   };
 })

@@ -1,19 +1,24 @@
-
-
-<div ng-controller="ModalDemoCtrl">
         <div class="modal-header">
             <h3 class="modal-title">Dont ANGER the Monkey</h3>
         </div>
         <div class="modal-body">
-            <log-in />
-             <img src="images/evil_monkey.png" alt="">
-            <user-form />
+            <div class="row">
+                <img class="col-sm-6" ng-src="images/evil_monkey.png" alt="" style="max-width: 200px">
+                <div class="col-sm-4">
+                <button class="btn btn-danger" type="button" ng-hide="" ng-click="reg()">register</button>
+                <button class="btn btn-danger" type="button" ng-hide="" ng-click="login()">login</button>
+                </div>
+            </div>
+        <div>
+                <user-form ng-hide="true" /> 
+            </div>
+            <div>
+                <log-in ng-hide="true" />
+            </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+          
 
-        
-    </div>    
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>    
   </body>
 </html>
