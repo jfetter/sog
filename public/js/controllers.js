@@ -69,7 +69,7 @@ angular.module("sog")
 
 
 
-.controller('loginCtrl', function ($scope, $http) {
+.controller('loginCtrl', function ($rootScope, $scope, $http) {
 
 	$scope.submitLogin = function(){
 
@@ -81,7 +81,7 @@ angular.module("sog")
 		$http.post('/user/login', userData)
 		.then(function(user){
 			localStorage.setItem('token', JSON.stringify(user.data.token));
-			localStorage.setItem('user', JSON.stringify(user.data.user));
+			$rootScope.currentUser = user.data.user
 		},function (err) {
 			console.log(err);
 		})
@@ -128,7 +128,7 @@ angular.module("sog")
 
 .controller("profileCtrl", function($scope, $http){
 
-	$scope.user = JSON.parse(localStorage.getItem('user'));
+
 
 	$scope.users;
 

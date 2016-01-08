@@ -51,7 +51,7 @@ router.post('/login', (req, res) => {
         return res.status(401).send({ message: 'Invalid email and/or password' });
       }
       User.findOne({email: req.body.email}, function (err, userData) {
-        userData.password = ''
+        userData.password = null
         res.status(err ? 400:200).send(err || {user: userData, token: createJWT(user) });
       })
 
