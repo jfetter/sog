@@ -2,7 +2,10 @@
 
 angular.module("sog")
 
-.controller("homeCtrl", function($scope, $http, $uibModal, $log) {
+.controller("homeCtrl", function($scope, $http, $uibModal, $log, $state) {
+	if (localStorage.getItem('token') ) {
+		$state.go('profile')
+	}
 
   $scope.images = [];
 
@@ -69,18 +72,17 @@ angular.module("sog")
 
 
 
-.controller('loginCtrl', function($rootScope, $scope, $http) {
+.controller('loginCtrl', function($rootScope, $scope, $http ,$state) {
 
   $scope.submitLogin = function() {
 
     let userData = {}
     userData.email = $scope.loginEmail
     userData.password = $scope.loginPassword
-    console.log('login fired', userData);
-
     $http.post('/user/login', userData)
       .then(function(user) {
         localStorage.setItem('token', JSON.stringify(user.data.token));
+					$state.go('profile')
       }, function(err) {
         console.log(err);
       })
@@ -125,7 +127,12 @@ angular.module("sog")
   }
 })
 
-.controller("profileCtrl", function($scope, $http) {
+.controller("profileCtrl", function($rootScope,$scope, $http ,$state) {
+	// if not logged in , (no token) goes back to home
+	if (!localStorage.getItem('token') ) {
+		$state.go('home')
+	}
+
   $scope.users;
 	$scope.currentUser;
 
@@ -135,17 +142,19 @@ angular.module("sog")
     })
     .then(function(res) {
       $scope.users = res.data;
+
     }, function(err) {
       console.log(err);
     })
 
-  if (localStorage.getItem('token')) {
+  if (localStorage.getItem('token') ) {
     var currentUserToken = JSON.parse(localStorage.getItem('token'));
     $http.post('/user/currentUser', {
         userToken: currentUserToken
-      })
+    })
       .then(function(res) {
-        $scope.currentUser = res.data;
+        $rootScope.currentUser = res.data;
+
       }, function(err) {
         console.log(err);
       })
