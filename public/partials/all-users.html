@@ -18,24 +18,24 @@
 
 </div> -->
 
-<div ng-repeat="user in users track by $index">
-  <div class="container">
+        
+
+  <div ng-repeat="user in users track by $index" class="text-center pokeables">
     <div class="row">
           <div class="profile-header-container">   
           <div class="profile-header-img">
-                  <img class="img-circle" ng-src={{user.avatar}} width="100px" />
+                  <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
+                  <div class="span3 offset1">
+                    poke <span class="glyphicon glyphicon-hand-up"></span>
+                </div>
                   <div class="name-label-container">
                     <span class="label label-default name-label">{{user.name}}</span>
                   </div>
-                  <div class="phone-label-container">
+<!--                   <div class="phone-label-container">
                     <span class="label label-default phone-label">{{user.phone}}</span>
-                  </div>
-                  <div class="span3 offset1">
-                    Favorite <span class="glyphicon glyphicon-star"></span>
-                </div>
+                  </div> -->
               </div>
           </div> 
     </div>
   </div>
-</div>
