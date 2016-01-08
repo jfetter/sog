@@ -27,7 +27,7 @@ describe('Register The Users', function() {
     .send({
       email:"bob@bob.com",
       password:"password",
-      name:"Bob Bobbing",
+      name:"Bob",
       phone:"555-555-5555",
       address:"341 Bob Lane, Bob St."
     })
@@ -35,7 +35,7 @@ describe('Register The Users', function() {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('bob@bob.com');
-      expect(res.body.name).to.equal('Bob Bobbing');
+      expect(res.body.name).to.equal('Bob');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("341 Bob Lane, Bob St.");
       userIds.Bob = res.body._id;
@@ -49,7 +49,7 @@ describe('Register The Users', function() {
     .send({
       email:"steve@steve.com",
       password:"password",
-      name:"Steve Steveing",
+      name:"Steve",
       phone:"555-555-5555",
       address:"252 Steve Lane, Steve St."
     })
@@ -57,7 +57,7 @@ describe('Register The Users', function() {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('steve@steve.com');
-      expect(res.body.name).to.equal('Steve Steveing');
+      expect(res.body.name).to.equal('Steve');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Steve Lane, Steve St.");
       userIds.Steve = res.body._id;
@@ -71,7 +71,7 @@ describe('Register The Users', function() {
     .send({
       email:"Jenny@jenny.com",
       password:"password",
-      name:"Jenny Jennison",
+      name:"Jenny",
       phone:"555-555-5555",
       address:"252 Jenn Lane, Jen St."
     })
@@ -79,7 +79,7 @@ describe('Register The Users', function() {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('Jenny@jenny.com');
-      expect(res.body.name).to.equal('Jenny Jennison');
+      expect(res.body.name).to.equal('Jenny');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Jenn Lane, Jen St.");
       userIds.Jenny = res.body._id;
@@ -96,7 +96,7 @@ describe('Receive All The Users', function() {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('bob@bob.com');
-      expect(res.body.name).to.equal('Bob Bobbing');
+      expect(res.body.name).to.equal('Bob');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("341 Bob Lane, Bob St.");
       done();
@@ -105,12 +105,12 @@ describe('Receive All The Users', function() {
 
   it('Should Receive Steve', function(done) {
     chaiApp
-    .get(`/user/{userIds.Steve}`)
+    .get(`/user/${userIds.Steve}`)
     .end(function(err, res) {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('steve@steve.com');
-      expect(res.body.name).to.equal('Steve Steveing');
+      expect(res.body.name).to.equal('Steve');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Steve Lane, Steve St.");
       done();
@@ -119,12 +119,12 @@ describe('Receive All The Users', function() {
 
   it('Should Receive Jenny', function(done) {
     chaiApp
-    .get(`/user/{userIds.Steve}`)
+    .get(`/user/${userIds.Jenny}`)
     .end(function(err, res) {
       if(err) console.error(err);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('Jenny@jenny.com');
-      expect(res.body.name).to.equal('Jenny Jennison');
+      expect(res.body.name).to.equal('Jenny');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Jenn Lane, Jen St.");
       userIds.Jenny = res.body._id;
@@ -138,14 +138,12 @@ describe('Update The Users', function() {
     chaiApp
     .put(`/user/update/${userIds.Bob}`)
     .send({
-      name:"Bob Updated",
       phone:"444-444-4444",
       address:"252 Bob Lane, Updated St."
     })
     .end(function(err, res) {
       if(err) console.error(err);
       expect(res).to.have.status(200);
-      expect(res.body.name).to.equal('Bob Updated');
       expect(res.body.phone).to.equal('444-444-4444');
       expect(res.body.address).to.equal("252 Bob Lane, Updated St.");
       done();
@@ -156,14 +154,12 @@ describe('Update The Users', function() {
     chaiApp
     .put(`/user/update/${userIds.Steve}`)
     .send({
-      name:"Steve Updated",
       phone:"444-444-4444",
       address:"252 Steve Lane, Updated St."
     })
     .end(function(err, res) {
       if(err) console.error(err);
       expect(res).to.have.status(200);
-      expect(res.body.name).to.equal('Steve Updated');
       expect(res.body.phone).to.equal('444-444-4444');
       expect(res.body.address).to.equal("252 Steve Lane, Updated St.");
       done();
@@ -174,14 +170,12 @@ describe('Update The Users', function() {
     chaiApp
     .put(`/user/update/${userIds.Jenny}`)
     .send({
-      name:"Jenny Updated",
       phone:"444-444-4444",
       address:"252 Jenny Lane, Updated St."
     })
     .end(function(err, res) {
       if(err) console.error(err);
       expect(res).to.have.status(200);
-      expect(res.body.name).to.equal('Jenny Updated');
       expect(res.body.phone).to.equal('444-444-4444');
       expect(res.body.address).to.equal("252 Jenny Lane, Updated St.");
       done();
