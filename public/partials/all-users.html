@@ -1,4 +1,4 @@
-<div ng-repeat="user in users track by $index">
+<!-- <div ng-repeat="user in users track by $index">
   <div class="container usercard">
   	<div class="row">
     		<div class="span1">
@@ -16,4 +16,26 @@
   	</div>
   </div>
 
+</div> -->
+
+<div ng-repeat="user in users track by $index">
+  <div class="container">
+    <div class="row">
+          <div class="profile-header-container">   
+          <div class="profile-header-img">
+                  <img class="img-circle" ng-src={{user.avatar}} width="100px" />
+                  <!-- badge -->
+                  <div class="name-label-container">
+                    <span class="label label-default name-label">{{user.name}}</span>
+                  </div>
+                  <div class="phone-label-container">
+                    <span class="label label-default phone-label">{{user.phone}}</span>
+                  </div>
+                  <div class="span3 offset1">
+                    Favorite <span class="glyphicon glyphicon-star"></span>
+                </div>
+              </div>
+          </div> 
+    </div>
+  </div>
 </div>
