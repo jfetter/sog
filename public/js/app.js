@@ -1,8 +1,13 @@
 "use strict";
 
-angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate"])
+angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate","flow"])
 
-.config(function($stateProvider, $urlRouterProvider){
+.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+	$locationProvider.html5Mode({
+		enabled:false,
+		requireBase: false
+	});
+
 	$urlRouterProvider.otherwise("home")
 
 	$stateProvider

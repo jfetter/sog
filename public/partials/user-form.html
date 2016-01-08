@@ -1,12 +1,26 @@
-<form  class="user-form" >
+<div>
+  <form ng-submit="submit()" ng-controller="userFormCtrl" class="user-form">
     <div class="form-group">
-        <input type="text" class="form-control email" placeholder="email">
-        <input type="text" class="form-control password1" placeholder="password">
-        <input type="text" class="form-control password2" placeholder="password">
-        <input type="text" class="form-control name" placeholder="name">
-        <input type="text" class="form-control address" placeholder="address">
-        <input type="text" class="form-control phone" placeholder="phone">
-        <input type="file" placeholder="upload avatar">
+      <input type="text" ng-model="email" class="form-control email" placeholder="email" >
+      <input type="text" ng-model="password" class="form-control password1" placeholder="password">
+      <input type="text" ng-model="password2" class="form-control password2" placeholder="password">
+      <input type="text" ng-model="name" class="form-control name" placeholder="name">
+      <input type="text" ng-model="address" class="form-control address" placeholder="address">
+      <input type="text" ng-model="phone" class="form-control phone" placeholder="phone">
+
+      <div flow-init flow-name="uploader.flow" flow-files-added="processFiles($files)">
+        <button flow-btn type="file">Upload Image</button>
+        <div ng-repeat="image in uploader.flow.files track by $index">
+          <span class="text">{{image.name}}</span>
+          <br>
+        </div>
+      </div>
     </div>
-  <button type="submit" class="btn btn-primary">submit</button>
-</form>
+    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+
+
+
+  </form>
+</div>

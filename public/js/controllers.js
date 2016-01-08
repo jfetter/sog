@@ -18,7 +18,7 @@ angular.module("sog")
 
 			}, function errorCallback(response){
 				console.log(response)
-		}) 
+		})
 	}
 
   $scope.animationsEnabled = true;
@@ -48,19 +48,19 @@ angular.module("sog")
 // It is not the same as the $uibModal service used above.
 .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
 	$scope.login = false;
-	$scope.register = false; 
+	$scope.register = false;
 
 	$scope.showLogin = function(){
   		$scope.login = !$scope.login;
   		$scope.register = false;
-  	}	
-  
+  	}
+
 
   $scope.showReg = function(){
   	$scope.register = !$scope.register;
   	$scope.login = false;
-  	}	
- 
+  	}
+
 
   $scope.cancel = function () {
   	console.log("cancel clicked")
@@ -68,9 +68,30 @@ angular.module("sog")
   };
 })
 
+.controller('userFormCtrl', function ($rootScope,$scope, $window) {
+
+	// upload image and base64 encode
+	$scope.imageStrings = [];
+	$scope.processFiles = function(files){
+	angular.forEach(files, function(flowFile, i){
+		 var fileReader = new FileReader();
+				fileReader.onload = function (event) {
+					var uri = event.target.result;
+						$scope.imageStrings[i] = uri;
+				};
+				fileReader.readAsDataURL(flowFile.file);
+	});
+};
+
+$scope.submit = function () {
+
+	console.log($scope.email,$scope.password,$scope.password2,$scope.name,$scope.address,$scope.phone, $scope.imageStrings[0]);
+}
+
+
+})
+
 .controller("profileCtrl", function($scope){
 	console.log("inside profile ctrl")
 	$scope.title = "PROFILE!!!!!!"
 })
-
-
