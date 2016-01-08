@@ -36,6 +36,16 @@
 	border: 2px solid black;
 }
 
+.favorites{
+	margin: 5em;
+	border: 2px solid black;
+}
+
+.pokables{
+	border: 2px solid black;
+	margin-top: 1em;
+}
+
 .profile-header-container{
     margin: 0 auto;
     text-align: center;
@@ -55,11 +65,13 @@
     margin-top: 43px;
 }
 
+
+
 /**
  * label components
  */
 .name-label-container {
-    margin-top: -19px;
+    margin-top: -39px;
     /* z-index: 1000; */
     text-align: center;
 }
@@ -70,13 +82,16 @@
     border-radius: 27px;
 }
 
-.phone-label-container {
+.poke-header{
+	text-align: center
+}
+
+.poke-label-container {
     margin-top: -19px;
-    /* z-index: 1000; */
     text-align: center;
 }
 
-.label.label-default.phone-label {
+.label.label-default.poke-label {
     background-color: rgb(81, 210, 183);
     padding: 5px 10px 5px 10px;
     border-radius: 27px;
