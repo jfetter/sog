@@ -1,0 +1,26 @@
+{
+  "name": "sogfront",
+  "homepage": "https://github.com/robertsonsamuel/sog",
+  "authors": [
+    "Jillian Fetter <jillian.fetter@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "angular-bootstrap": "~0.14.3",
+    "bootstrap": "~3.3.6",
+    "angular-animate": "~1.4.8",
+    "ng-flow": "~2"
+  }
+}
