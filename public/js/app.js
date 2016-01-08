@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("sog", ["ui.router", "ui.bootstrap"])
+angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate"])
 
 .config(function($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise("home")
