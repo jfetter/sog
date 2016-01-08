@@ -4,20 +4,21 @@ angular.module("sog")
 
 .controller("homeCtrl", function($scope, $http, $uibModal, $log){
 
-	$scope.images = [];
+	 $scope.images = [];
 
-	for(var i=0; i < 5; i ++){
-		$http({
-			method: "GET",
-			url: "http://uifaces.com/api/v1/random"
-				}).then(function(faces){
-				//find page-view-width and insert button at [index] page-view-width/128
-				$scope.images.push(faces.data.image_urls.epic)
+	// for(var i=0; i < 70; i ++){
+	// 	$http({
+	// 		method: "GET",
+	// 		url: "http://uifaces.com/api/v1/random"
+	// 			}).then(function(faces){
+	// 				console.log(faces.data.image_urls.epic)
+	// 			//find page-view-width and insert button at [index] page-view-width/128
+	// 			$scope.images.push(faces.data.image_urls.epic)
 
-			}, function errorCallback(response){
-				console.log(response)
-		})
-	}
+	// 		}, function errorCallback(response){
+	// 			console.log(response)
+	// 	})
+	// }
 
   $scope.animationsEnabled = true;
 
@@ -42,7 +43,7 @@ angular.module("sog")
   };
 })
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
+// $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
 	$scope.login = false;
@@ -101,29 +102,26 @@ angular.module("sog")
 	});
 };
 
-$scope.submit = function () {
-	console.log('submiting');
-	let newUser = {}
+	$scope.submit = function () {
+		console.log('submiting');
+		let newUser = {}
 
-		newUser.email = $scope.email,
-		newUser.password = $scope.password,
-		newUser.name = $scope.name,
-		newUser.address = $scope.address,
-		newUser.phone = $scope.phone,
-		newUser.avatar = $scope.imageStrings
+			newUser.email = $scope.email,
+			newUser.password = $scope.password,
+			newUser.name = $scope.name,
+			newUser.address = $scope.address,
+			newUser.phone = $scope.phone,
+			newUser.avatar = $scope.imageStrings
 
-			console.log(newUser);
+		console.log(newUser);
 
-	$http.post('/user/register', newUser ,null)
-	.then(function (res) {
-		console.log(res);
-	},function (err) {
-		if(err) console.log(err);
-	})
-
-}
-
-
+		$http.post('/user/register', newUser ,null)
+		.then(function (res) {
+			console.log(res);
+		},function (err) {
+			if(err) console.log(err);
+		})
+	}
 })
 
 .controller("profileCtrl", function($scope, $http){
