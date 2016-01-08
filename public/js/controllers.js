@@ -85,6 +85,15 @@ angular.module("sog")
 
 $scope.submit = function () {
 
+	let newUser = {
+		email:$scope.email,
+		password:$scope.password,
+		name:$scope.name,
+		address:$scope.address,
+		phone:$scope.phone,
+		avatar:$scope.imageStrings[0]
+	}
+
 	console.log($scope.email,$scope.password,$scope.password2,$scope.name,$scope.address,$scope.phone, $scope.imageStrings[0]);
 }
 
