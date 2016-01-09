@@ -18,11 +18,12 @@
 
 </div> -->
 
-        
+<input ng-model="query" type="text" class="form-control" placeholder="Search">
 
-  <div ng-repeat="user in users track by $index" class="text-center pokeables">
+<div ng-repeat="user in users | filter: {name: query} | orderBy: 'name' track by $index">
+  <div class="text-center pokeables">
     <div class="row">
-          <div class="profile-header-container">   
+          <div class="profile-header-container">
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
@@ -36,6 +37,7 @@
                     <span class="label label-default phone-label">{{user.phone}}</span>
                   </div> -->
               </div>
-          </div> 
+          </div>
     </div>
   </div>
+</div>

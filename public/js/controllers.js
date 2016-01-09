@@ -125,7 +125,7 @@ angular.module("sog")
     $http.post('/user/register', newUser, null)
       .then(function(res) {
         console.log(res);
-        $scope.$parent.showLogin(); 
+        $scope.$parent.showLogin();
       }, function(err) {
         if (err) console.log(err);
       })
@@ -159,11 +159,15 @@ angular.module("sog")
       })
   }
 
+
+	// filter function ////////////
+
+
+	// Logout function ////////////
 	$scope.logout = function () {
 		$rootScope.currentUser = null;
 		localStorage.clear();
 		$state.go('home');
-
 	}
 
 })
