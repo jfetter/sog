@@ -163,6 +163,18 @@ angular.module("sog")
 		$rootScope.currentUser = null;
 		localStorage.clear();
 		$state.go('home');
+	}
+
+	$scope.pokeUser = function(user){
+		console.log(user._id)
+		user.hide = true;
+		$http.post("/user/poke", {_id: user._id})
+		.then(function(res){
+			console.log(res)
+
+		}, function(err){
+			console.log(err)
+		})
 
 	}
 

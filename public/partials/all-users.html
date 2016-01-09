@@ -20,14 +20,14 @@
 
         
 
-  <div ng-repeat="user in users track by $index" class="text-center pokeables">
-    <div class="row">
+  <div  ng-repeat="user in users track by $index" class="text-center pokeables">
+    <div class="row" ng-hide="user.hide">
           <div class="profile-header-container">   
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
                   <div class="span3 offset1">
-                    poke <span class="glyphicon glyphicon-hand-up"></span>
+                    poke <span ng-click="pokeUser(user)" class="poker glyphicon glyphicon-hand-up"></span>
                 </div>
                   <div class="name-label-container">
                     <span class="label label-default name-label">{{user.name}}</span>

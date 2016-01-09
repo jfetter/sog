@@ -67,6 +67,11 @@ router.post('/login', (req, res) => {
   });
 });
 
+router.post("/poke", (req, res) =>{
+  console.log(req.body)
+  //User.findById(req._id)
+})
+
 router.put('/update/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
     res.status(err ? 400:200).send(err || req.body);
