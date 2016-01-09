@@ -77,6 +77,15 @@ angular.module("sog")
 
 .controller('loginCtrl', function($rootScope, $scope, $http ,$state) {
 
+  console.log("IN LOGIN CTRL, LOCAL STORAGE TOKEN:", localStorage.token)
+  $scope.isLoggedIn = function(){  
+    // $rootScope.token = {}
+    if (localStorage.token){
+      return true;
+    } 
+    return false;
+  }
+
   $scope.submitLogin = function() {
 
     let userData = {}
@@ -85,12 +94,22 @@ angular.module("sog")
     $http.post('/user/login', userData)
       .then(function(user) {
         localStorage.setItem('token', JSON.stringify(user.data.token));
-					$scope.$parent.cancel();
-					$state.go('profile');
+        if ($scope.$parent.cancel){
+          $scope.$parent.cancel();
+        }  
+				$state.go('profile');
       }, function(err) {
         console.log(err);
       })
   }
+
+  // Logout function ////////////
+  $scope.logout = function () {
+    $rootScope.currentUser = null;
+    localStorage.clear();
+    $state.go('home');
+  }
+
 })
 
 
@@ -129,20 +148,20 @@ angular.module("sog")
       }, function(err) {
         if (err) console.log(err);
       })
-
   }
 })
 
 .controller("profileCtrl", function($rootScope,$scope, $http ,$state) {
-	$scope.pokedOnes = [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', _id: 1234 }, {name:'gerty', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', id: 12345 }];
+	$scope.users = [];
+  $scope.currentUser;
+  $scope.pokedOnes = [];
+  $scope.pokedIds = [];
+ // $scope.pokedOnes = [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', _id: 1234 }, {name:'gerty', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', id: 12345 }];
 
 	// if not logged in , (no token) goes back to home
 	if (!localStorage.getItem('token') ) {
 		$state.go('home')
 	}
-
-	$scope.users = [];
-	$scope.currentUser;
 
   $http({type: 'GET', url: '/user/all'})
     .then(function(res) {
@@ -156,23 +175,13 @@ angular.module("sog")
     	$http.post('/user/currentUser', {userToken: currentUserToken})
       	.then(function(res) {
         	$rootScope.currentUser = res.data;
+          $scope.pokedOnes = $scope.currentUser.pokes;
       }, function(err) {
         console.log(err);
       })
   }
 
-
 	// filter function ////////////
-
-
-	// Logout function ////////////
-	$scope.logout = function () {
-		$rootScope.currentUser = null;
-		localStorage.clear();
-		$state.go('home');
-
-	}
-
 	$scope.pokeUser = function(user){
 		var poked = user;
 		var poker = $rootScope.currentUser;
@@ -181,8 +190,10 @@ angular.module("sog")
 		$http.post("/user/poke", {poker: poker._id, poked: poked._id})
 		.then(function(res){
 			console.log(res)
-			$scope.pokedOnes.push(res.data)
-
+			$scope.pokedOnes.push(res.data);
+      ////this should push the id of the user into an array 
+      //// to check hide status
+      $scope.pokeIds.push(res.data._id);
 		}, function(err){
 			console.log(err)
 		})

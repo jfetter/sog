@@ -1,16 +1,11 @@
-<div  class= "navi row">
+<div  class= "navi row" ng-controller="loginCtrl">
 
-	<div ng-controller="profileCtrl" class="col-sm-6 col-sm-offset-6">
-		<form  ng-if="users" class="navbar-form navbar-left well" role="search">
-		  <div class="nav-prof form-group">
-		    <input ng-model="query" type="text" class="form-control" placeholder="Search">
-		  </div>
+	<div ng-if="isLoggedIn()" class="col-sm-1 col-sm-offset-11">
 		  <a href="#" ng-click="logout()">Logout</a>
-		</form>
 	</div>
 
-	<div ng-controller="homeCtrl" >
-		<form  ng-if="false" class="nav-home navbar-form navbar-left" >
+	<div >
+		<form  ng-hide="isloggedIn()" class="nav-home navbar-form navbar-left" >
 		  <log-in />
 		</form>
 	</div>

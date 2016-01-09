@@ -22,7 +22,8 @@
 
 
 <div ng-repeat="user in users | filter: {name: query} | orderBy: 'name' track by $index">
-    <div class="row" ng-hide="user.hide || user._id === currentUser._id" >
+    <div class="row" ng-hide="user.hide || user._id === currentUser._id || pokedOnes.indexOf(user._id) != -1" >
+     <!--  dont show ones that have an id that shows in the pokedIds array || pokedOnes.indexOf(user._id) != -1) -->
           <div class="profile-header-container">   
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
