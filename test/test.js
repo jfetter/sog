@@ -88,7 +88,19 @@ describe('Register The Users', function() {
   });
 });
 
-describe('Receive All The Users', function() {
+describe('Recieve All Users', function() {
+  it('Should Receive All Users', function(done) {
+    chaiApp
+    .get('/user/all')
+    .end(function(err, res) {
+      expect(res).to.have.status(200);
+      expect(res.body.length).to.equal(3);
+      done();
+    });
+  });
+});
+
+describe('Receive All Users One By One', function() {
   it('Should Receive Bob', function(done) {
     chaiApp
     .get(`/user/${userIds.Bob}`)
