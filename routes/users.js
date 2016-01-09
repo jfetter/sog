@@ -15,11 +15,6 @@ function createJWT(user) {
   return jwt.encode(payload, 'secret');
 }
 
-let getPokes = (id) => {
-  User.findById(id, (err, user) => {
-    return user.pokes;
-  }).populate('pokes');
-}
 
 //Export me and import me plz
 router.get('/all', (req, res) => {
@@ -70,15 +65,17 @@ router.post('/login', (req, res) => {
 router.post("/poke", (req, res) => {
   let poked = req.body.poked;
   let poker = req.body.poker;
-  
+
   console.log(req.body)
-  res.status(200).send(poked);
   // DO YOU NEED A LIST OF ALL THE IDS OF ALL THE POKED ONES?
   User.findById(poker, (err, user) => {
     if(err) res.status(400).send(err.message);
-    user.pokes.push(poker);
-    User.save(user, (err) => {
-      res.status(err ? 400:200).send(err || getPokes(user._id));
+    user.pokes.push(poked);
+    user.save(user, (err, savedUser) => {
+      User.findOne({ _id: savedUser._id }, (err, foundUser) => {
+        console.log(foundUser);
+          res.status(err ? 400:200).send(err || foundUser.pokes);
+      }).populate('pokes');
     });
   });
 });
