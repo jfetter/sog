@@ -1,6 +1,6 @@
-'use strict';
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let userSchema = new Schema({
@@ -10,7 +10,28 @@ let userSchema = new Schema({
   address: { type: String, require: true },
   phone: {type: String, require: true },
   avatar: {type: String , require: false}
-})
+});
+
+userSchema.pre('save', function() {
+  let user = this;
+
+  if(!user.isModified('password')) {
+    return next();
+  }
+
+  bcrypt.genSalt(10, function() {
+    brypt.hash(user.password, salt, function() {
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+userSchema.methods.comparePassword = function(password, done) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    done(err, iMatch);
+  });
+}
 
 let User = mongoose.model('User', userSchema);
 
