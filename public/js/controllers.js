@@ -152,7 +152,7 @@ angular.module("sog")
 })
 
 .controller("profileCtrl", function($rootScope,$scope, $http ,$state) {
-	$scope.users = [];
+	$rootScope.users = [];
   $scope.currentUser;
   $scope.pokedOnes = [];
   $scope.pokedIds = [];
@@ -165,7 +165,7 @@ angular.module("sog")
 
   $http({type: 'GET', url: '/user/all'})
     .then(function(res) {
-    	$scope.users = res.data;
+    	$rootScope.users = res.data;
     }, function(err) {
       console.log(err);
     })
