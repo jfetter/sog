@@ -134,6 +134,8 @@ angular.module("sog")
 })
 
 .controller("profileCtrl", function($rootScope,$scope, $http ,$state) {
+	$scope.pokedOnes = [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', _id: 1234 }, {name:'gerty', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', id: 12345 }];
+
 	// if not logged in , (no token) goes back to home
 	if (!localStorage.getItem('token') ) {
 		$state.go('home')
@@ -166,16 +168,35 @@ angular.module("sog")
 	}
 
 	$scope.pokeUser = function(user){
-		console.log(user._id)
+		var poked = user;
+		var poker = $rootScope.currentUser;
+		console.log(poker, poked)
 		user.hide = true;
-		$http.post("/user/poke", {_id: user._id})
+		$http.post("/user/poke", {poker: poker._id, poked: poked._id})
 		.then(function(res){
 			console.log(res)
+			$scope.pokedOnes.push(res.data)
 
 		}, function(err){
 			console.log(err)
 		})
+	}	
 
+	$scope.unPoke = function(poked){
+		console.log("poked", poked)
+		var poker = $rootScope.currentUser;
+		console.log(poker, poked)
+		poked.hide = true;
+		$http.post("/user/unpoke", {poker: poker._id, poked: poked._id})
+		.then(function(res){
+			console.log(res)
+			$scope.users.push(res.data)
+
+		}, function(err){
+			console.log(err)
+		})
 	}
+
+
 
 })

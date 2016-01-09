@@ -1,21 +1,18 @@
-<div ng-repeat="poked in [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg' }, {name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg' }] track by $index">
-  <div class="text-center pokeds">
-    <div class="row">
+<div ng-repeat="poked in pokedOnes track by $index">
+  <div class="text-center poked-ones">
+    <div ng-hide="poked.hide" class="row">
         <span >FOLKS I POKED</span>
-          <div class="profile-header-container">   
+          <div  class="profile-header-container">   
           <div class="poked-img profile-header-img">
                   <img class="img-circle" ng-src={{poked.avatar}} width="" />
                   <!-- badge -->
                   <div class="unpoke span3 offset1">
-                    <span class="glyphicon glyphicon-ban-circle"> </span> <br/>
+                    <span ng-click="unPoke(poked)" class="glyphicon glyphicon-ban-circle"> </span> <br/>
                     <span>un-Poke</span>
                 </div>
                   <div class="poked-label-container">
                     <span class="label label-default poked-label">{{poked.name}}</span>
                   </div>
-<!--                   <div class="phone-label-container">
-                    <span class="label label-default phone-label">{{user.phone}}</span>
-                  </div> -->
               </div>
           </div> 
     </div>
