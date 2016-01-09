@@ -141,7 +141,7 @@ angular.module("sog")
 		$state.go('home')
 	}
 
-	$scope.users;
+	$scope.users = [];
 	$scope.currentUser;
 
   $http({type: 'GET', url: '/user/all'})
