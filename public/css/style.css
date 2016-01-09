@@ -52,7 +52,7 @@
 }
 
 .profile-header-img {
-    padding: 54px;
+    padding: 1em;
 }
 
 .profile-header-img > img.img-circle {
@@ -81,9 +81,18 @@
     padding: 5px 10px 5px 10px;
     border-radius: 27px;
 }
+.poked-img{
+	padding: 2em;
+}
 
 .poke-header{
-	text-align: center
+	text-align: center;
+}
+
+/*add on-hover to unpoke*/
+.unpoke{
+	margin-top: -49px;
+	color: white;
 }
 
 .poke-label-container {

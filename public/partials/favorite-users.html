@@ -1,13 +1,14 @@
 <div ng-repeat="poked in [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg' }, {name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg' }] track by $index">
   <div class="text-center pokeds">
     <div class="row">
-        <span >PEOPLE I POKED</span>
+        <span >FOLKS I POKED</span>
           <div class="profile-header-container">   
-          <div class="profile-header-img">
+          <div class="poked-img profile-header-img">
                   <img class="img-circle" ng-src={{poked.avatar}} width="" />
                   <!-- badge -->
-                  <div class="span3 offset1">
-                    un-poke <span class="glyphicons glyphicons-ban-circle"></span>
+                  <div class="unpoke span3 offset1">
+                    <span class="glyphicon glyphicon-ban-circle"> </span> <br/>
+                    <span>un-Poke</span>
                 </div>
                   <div class="poked-label-container">
                     <span class="label label-default poked-label">{{poked.name}}</span>
