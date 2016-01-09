@@ -3,7 +3,9 @@
 angular.module("sog")
 
 .controller("homeCtrl", function($scope, $http, $uibModal, $log, $state) {
+	$state.loggedIn = false;
 	if (localStorage.getItem('token') ) {
+		$state.loggedIn = true;
 		$state.go('profile')
 	}
 
