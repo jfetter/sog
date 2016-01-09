@@ -78,11 +78,11 @@ angular.module("sog")
 .controller('loginCtrl', function($rootScope, $scope, $http ,$state) {
 
   console.log("IN LOGIN CTRL, LOCAL STORAGE TOKEN:", localStorage.token)
-  $scope.isLoggedIn = function(){  
+  $scope.isLoggedIn = function(){
     // $rootScope.token = {}
     if (localStorage.token){
       return true;
-    } 
+    }
     return false;
   }
 
@@ -96,7 +96,7 @@ angular.module("sog")
         localStorage.setItem('token', JSON.stringify(user.data.token));
         if ($scope.$parent.cancel){
           $scope.$parent.cancel();
-        }  
+        }
 				$state.go('profile');
       }, function(err) {
         console.log(err);
@@ -176,6 +176,14 @@ angular.module("sog")
       	.then(function(res) {
         	$rootScope.currentUser = res.data;
           $scope.pokedOnes = $scope.currentUser.pokes;
+					$http.get(`/user/poked/${res.data._id}`)
+					.then(function (res) {
+						res.data.forEach(function (pokedPerson) {
+							$scope.pokedOnes.push(pokedPerson)
+						})
+					},function (err) {
+						console.log(err);
+					})
       }, function(err) {
         console.log(err);
       })
@@ -190,10 +198,24 @@ angular.module("sog")
 		$http.post("/user/poke", {poker: poker._id, poked: poked._id})
 		.then(function(res){
 			console.log(res)
-			$scope.pokedOnes.push(res.data);
-      ////this should push the id of the user into an array 
+			// res.data.forEach(function (person) {
+			// 	$scope.pokedOnes.push(person);
+			// })
+			$http.get(`/user/poked/${$rootScope.currentUser._id}`)
+			.then(function (res) {
+				res.data.forEach(function (pokedPerson) {
+					$scope.pokedOnes.push(pokedPerson)
+				})
+			},function (err) {
+				console.log(err);
+			})
+
+      ////this should push the id of the user into an array
       //// to check hide status
-      $scope.pokedIds.push(res.data._id);
+			// res.data.forEach(function (person) {
+			// 	$scope.pokedIds.push(person._id);
+			// })
+
 		}, function(err){
 			console.log(err)
 		})

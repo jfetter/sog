@@ -33,6 +33,7 @@ describe('Register The Users', function() {
     })
     .end(function(err, res) {
       if(err) console.error(err);
+      console.log(res.body);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('bob@bob.com');
       expect(res.body.name).to.equal('Bob');

@@ -23,6 +23,14 @@ router.get('/all', (req, res) => {
   });
 });
 
+router.get('/poked/:id', (req, res) => {
+  let userId = req.params.id;
+  console.log('req params id', userId);
+  User.findById( userId, (err, foundUser) => {
+    res.status(err ? 400:200).send(err || foundUser.pokes)
+  }).populate('pokes')
+})
+
 router.get('/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
     res.status(err ? 400:200).send(err || user)
