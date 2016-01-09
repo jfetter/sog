@@ -2,13 +2,10 @@ import express from "express";
 import User from "../models/user";
 import moment from "moment";
 import jwt from "jwt-simple";
+
 const router = express.Router();
 
-
-
-/* \\\\\\\\Makes JWT (export later)\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-*/
+// Makes JWT (export later)
 function createJWT(user) {
   var payload = {
     sub: user._id,
@@ -18,10 +15,13 @@ function createJWT(user) {
   return jwt.encode(payload, 'secret');
 }
 
-/* \\\\\\\\\\Export me and import me plz\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-*/
+let getPokes = (id) => {
+  User.findById(id, (err, user) => {
+    return user.pokes;
+  }).populate('pokes');
+}
 
+//Export me and import me plz
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
     res.status(err ? 400:200).send(err || users)
@@ -67,18 +67,21 @@ router.post('/login', (req, res) => {
   });
 });
 
-
-
-router.post("/poke", (req, res) =>{
-  var poked = req.body.poked;
-  var poker = req.body.poker;
+router.post("/poke", (req, res) => {
+  let poked = req.body.poked;
+  let poker = req.body.poker;
+  
   console.log(req.body)
   res.status(200).send(poked);
   // DO YOU NEED A LIST OF ALL THE IDS OF ALL THE POKED ONES?
-  // User.findByIdAndUpdate(poker, {$set: pokeds}, err => {
-  //   res.status(err ? 400:200).send(err || req.body);
-  // })
-})
+  User.findById(poker, (err, user) => {
+    if(err) res.status(400).send(err.message);
+    user.pokes.push(poker);
+    User.save(user, (err) => {
+      res.status(err ? 400:200).send(err || getPokes(user._id));
+    });
+  });
+});
 
 router.post("/unpoke", (req, res) =>{
   var poked = req.body.poked;
@@ -89,7 +92,7 @@ router.post("/unpoke", (req, res) =>{
   // User.findByIdAndUpdate(poker, {$set: pokeds}, err => {
   //   res.status(err ? 400:200).send(err || req.body);
   // })
-})
+});
 
 router.put('/update/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
