@@ -20,15 +20,15 @@
 
 <input ng-model="query" type="text" class="form-control" placeholder="Search">
 
+
 <div ng-repeat="user in users | filter: {name: query} | orderBy: 'name' track by $index">
-  <div class="text-center pokeables">
-    <div class="row">
-          <div class="profile-header-container">
+    <div class="row" ng-hide="user.hide || user._id === currentUser._id" >
+          <div class="profile-header-container">   
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
                   <div class="span3 offset1">
-                    poke <span class="glyphicon glyphicon-hand-up"></span>
+                    poke <span ng-click="pokeUser(user)" class="poker glyphicon glyphicon-hand-up"></span>
                 </div>
                   <div class="name-label-container">
                     <span class="label label-default name-label">{{user.name}}</span>

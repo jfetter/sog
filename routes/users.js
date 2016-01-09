@@ -67,6 +67,30 @@ router.post('/login', (req, res) => {
   });
 });
 
+
+
+router.post("/poke", (req, res) =>{
+  var poked = req.body.poked;
+  var poker = req.body.poker;
+  console.log(req.body)
+  res.status(200).send(poked);
+  // DO YOU NEED A LIST OF ALL THE IDS OF ALL THE POKED ONES?
+  // User.findByIdAndUpdate(poker, {$set: pokeds}, err => {
+  //   res.status(err ? 400:200).send(err || req.body);
+  // })
+})
+
+router.post("/unpoke", (req, res) =>{
+  var poked = req.body.poked;
+  var poker = req.body.poker;
+  console.log(req.body)
+  res.status(200).send(poked);
+  // REMOVE FROM LIST OF POKED ONES
+  // User.findByIdAndUpdate(poker, {$set: pokeds}, err => {
+  //   res.status(err ? 400:200).send(err || req.body);
+  // })
+})
+
 router.put('/update/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
     res.status(err ? 400:200).send(err || req.body);
