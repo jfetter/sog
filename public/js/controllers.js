@@ -133,33 +133,31 @@ angular.module("sog")
 		$state.go('home')
 	}
 
-  $scope.users;
+	$scope.users;
 	$scope.currentUser;
 
-  $http({
-      type: 'GET',
-      url: '/user/all'
-    })
+  $http({type: 'GET', url: '/user/all'})
     .then(function(res) {
-      $scope.users = res.data;
-
+    	$scope.users = res.data;
     }, function(err) {
       console.log(err);
     })
 
   if (localStorage.getItem('token') ) {
     var currentUserToken = JSON.parse(localStorage.getItem('token'));
-    $http.post('/user/currentUser', {
-        userToken: currentUserToken
-    })
-      .then(function(res) {
-        $rootScope.currentUser = res.data;
-
+    	$http.post('/user/currentUser', {userToken: currentUserToken})
+      	.then(function(res) {
+        	$rootScope.currentUser = res.data;
       }, function(err) {
         console.log(err);
       })
-
-
   }
+
+	$scope.logout = function () {
+		$rootScope.currentUser = null;
+		localStorage.clear();
+		$state.go('home');
+
+	}
 
 })
