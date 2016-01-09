@@ -1,15 +1,29 @@
 import express from "express";
 import User from "../models/user";
+import moment from "moment";
+import jwt from "jwt-simple";
+
 const router = express.Router();
+
+let createJWT = (user) => {
+  let payload = {
+    sub: user._id,
+    iat: moment().unix,
+    exp: moment().add(14, 'days').unix()
+  }
+  return jwt.encode(payload, secret);
+}
 
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
+    users = users.map(user => user.password = null);
     res.status(err ? 400:200).send(err || users);
   });
 });
 
 router.get('/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
+    user.password = null;
     res.status(err ? 400:200).send(err || user)
   });
 });

@@ -12,15 +12,15 @@ let userSchema = new Schema({
   avatar: {type: String , require: false}
 });
 
-userSchema.pre('save', function() {
+userSchema.pre('save', function(next) {
   let user = this;
 
   if(!user.isModified('password')) {
     return next();
   }
 
-  bcrypt.genSalt(10, function() {
-    brypt.hash(user.password, salt, function() {
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(user.password, salt, function(err, hash) {
       user.password = hash;
       next();
     });
@@ -29,7 +29,7 @@ userSchema.pre('save', function() {
 
 userSchema.methods.comparePassword = function(password, done) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
-    done(err, iMatch);
+    done(err, isMatch);
   });
 }
 
