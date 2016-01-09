@@ -193,7 +193,7 @@ angular.module("sog")
 			$scope.pokedOnes.push(res.data);
       ////this should push the id of the user into an array 
       //// to check hide status
-      $scope.pokeIds.push(res.data._id);
+      $scope.pokedIds.push(res.data._id);
 		}, function(err){
 			console.log(err)
 		})
