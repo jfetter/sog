@@ -28,7 +28,10 @@
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
                   <div class="span3 offset1">
-                    poke <span ng-click="pokeUser(user)" class="poker glyphicon glyphicon-hand-up"></span>
+                    poke <span ng-click="pokeUser(user)" class="poker glyphicon glyphicon-hand-up" ng-hide="false"></span>
+                    <span class="edit-user glyphicon glyphicon-pencil" ng-show="false"></span>
+                    <span class="edit-user glyphicon glyphicon-trash" ng-show="false"></span>
+
                 </div>
                   <div class="name-label-container">
                     <span class="label label-default name-label">{{user.name}}</span>
