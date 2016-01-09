@@ -64,6 +64,7 @@ angular.module("sog")
   }
 
 
+
   $scope.cancel = function() {
     console.log("cancel clicked")
     $uibModalInstance.dismiss('cancel');
@@ -82,7 +83,8 @@ angular.module("sog")
     $http.post('/user/login', userData)
       .then(function(user) {
         localStorage.setItem('token', JSON.stringify(user.data.token));
-					$state.go('profile')
+					$scope.$parent.cancel();
+					$state.go('profile');
       }, function(err) {
         console.log(err);
       })
@@ -121,9 +123,11 @@ angular.module("sog")
     $http.post('/user/register', newUser, null)
       .then(function(res) {
         console.log(res);
+        $scope.$parent.showLogin(); 
       }, function(err) {
         if (err) console.log(err);
       })
+
   }
 })
 
