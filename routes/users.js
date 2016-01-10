@@ -5,13 +5,12 @@ import jwt from "jwt-simple";
 
 const router = express.Router();
 
-// Makes JWT (export later)
-function createJWT(user) {
-  var payload = {
+let createJWT = (user) => {
+  let payload = {
     sub: user._id,
-    iat: moment().unix(),
+    iat: moment().unix,
     exp: moment().add(14, 'days').unix()
-  };
+  }
   return jwt.encode(payload, 'secret');
 }
 
@@ -19,7 +18,8 @@ function createJWT(user) {
 //Export me and import me plz
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
-    res.status(err ? 400:200).send(err || users)
+    users = users.map(user => user.password = null);
+    res.status(err ? 400:200).send(err || users);
   });
 });
 
@@ -33,6 +33,7 @@ router.get('/poked/:id', (req, res) => {
 
 router.get('/:id', (req, res) => {
   User.findById(req.params.id, (err, user) => {
+    user.password = null;
     res.status(err ? 400:200).send(err || user)
   });
 });
@@ -51,6 +52,7 @@ router.post('/register', (req, res) => {
     res.status(err ? 400:200).send(err || savedUser);
   });
 });
+
 
 router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email },'password', function(err, user) {

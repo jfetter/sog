@@ -2,10 +2,10 @@
 
 angular.module("sog")
 
-.controller("homeCtrl", function($scope, $http, $uibModal, $log, $state) {
-	$state.loggedIn = false;
+.controller("homeCtrl", function($rootScope, $scope, $http, $uibModal, $log, $state) {
+	$rootScope.loggedIn = false;
 	if (localStorage.getItem('token') ) {
-		$state.loggedIn = true;
+		$rootScope.loggedIn = true;
 		$state.go('profile')
 	}
 
@@ -106,6 +106,11 @@ angular.module("sog")
   // Logout function ////////////
   $scope.logout = function () {
     $rootScope.currentUser = null;
+		$rootScope.email = null;
+		$rootScope.name = null;
+		$rootScope.address = null;
+		$rootScope.phone = null;
+		$rootScope.pokedOnes = null;
     localStorage.clear();
     $state.go('home');
   }
@@ -113,7 +118,7 @@ angular.module("sog")
 })
 
 
-.controller('userFormCtrl', function($rootScope, $scope, $window, $http) {
+.controller('userFormCtrl', function($rootScope, $scope, $window, $http, $state) {
 
   // upload image and base64 encode
   $scope.imageStrings = [];
@@ -129,29 +134,92 @@ angular.module("sog")
   };
 
   $scope.submit = function() {
-    console.log('submiting');
-    let newUser = {}
 
-    newUser.email = $scope.email,
-      newUser.password = $scope.password,
-      newUser.name = $scope.name,
-      newUser.address = $scope.address,
-      newUser.phone = $scope.phone,
-      newUser.avatar = $scope.imageStrings
+			if(!$scope.loggedIn){
+				let newUser = {}
+		    newUser.email = $scope.email,
+		      newUser.password = $scope.password,
+		      newUser.name = $scope.name,
+		      newUser.address = $scope.address,
+		      newUser.phone = $scope.phone,
+		      newUser.avatar = $scope.imageStrings
 
-    console.log(newUser);
+		    $http.post('/user/register', newUser, null)
+		      .then(function(res) {
+		        console.log(res);
+		        $scope.$parent.showLogin();
+		      }, function(err) {
+		        if (err) console.log(err);
+		      })
+			}else{
+				let updateUser = {}
+				updateUser.name = $scope.name,
+				updateUser.address = $scope.address,
+				updateUser.phone = $scope.phone,
+				updateUser.avatar = $scope.imageStrings
+				console.log(updateUser,'updated user');
 
-    $http.post('/user/register', newUser, null)
-      .then(function(res) {
-        console.log(res);
-        $scope.$parent.showLogin();
-      }, function(err) {
-        if (err) console.log(err);
-      })
+				$http.put(`/user/update/${$rootScope.currentUser._id}`, updateUser, null)
+		      .then(function(res) {
+						var currentUserToken = JSON.parse(localStorage.getItem('token'));
+						$http.post('/user/currentUser', {userToken: currentUserToken})
+							.then(function(res) {
+								// yep that rootscope....
+								$rootScope.currentUser = res.data;
+								$rootScope.email = $rootScope.currentUser.email
+								$rootScope.name = $rootScope.currentUser.name
+								$rootScope.address = $rootScope.currentUser.address
+								$rootScope.phone = $rootScope.currentUser.phone
+								$rootScope.pokedOnes = $scope.currentUser.pokes;
+								$http.get(`/user/poked/${res.data._id}`)
+								.then(function (res) {
+									res.data.forEach(function (pokedPerson) {
+										$scope.pokedOnes.push(pokedPerson)
+									})
+								},function (err) {
+									console.log(err);
+								})
+						}, function(err) {
+							console.log(err);
+						})
+
+
+
+		      }, function(err) {
+		        if (err) console.log(err);
+		      })
+			}
+
   }
 })
 
-.controller("profileCtrl", function($rootScope,$scope, $http ,$state) {
+.controller("profileCtrl", function($rootScope,$scope, $http ,$state, $uibModal, $log) {
+
+	//Edit System, includes controls for modal and edit functions
+
+
+
+	$scope.animationsEnabled = true;
+  $scope.editProfile = function(size) {
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'partials/edit-modal.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+    });
+
+    modalInstance.result.then(function() {
+    }, function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+  $scope.toggleAnimation = function() {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+
+
 	$rootScope.users = [];
   $scope.currentUser;
   $scope.pokedOnes = [];
@@ -174,8 +242,13 @@ angular.module("sog")
     var currentUserToken = JSON.parse(localStorage.getItem('token'));
     	$http.post('/user/currentUser', {userToken: currentUserToken})
       	.then(function(res) {
+					// yep that rootscope....
         	$rootScope.currentUser = res.data;
-          $scope.pokedOnes = $scope.currentUser.pokes;
+					$rootScope.email = $rootScope.currentUser.email
+					$rootScope.name = $rootScope.currentUser.name
+					$rootScope.address = $rootScope.currentUser.address
+					$rootScope.phone = $rootScope.currentUser.phone
+          $rootScope.pokedOnes = $scope.currentUser.pokes;
 					$http.get(`/user/poked/${res.data._id}`)
 					.then(function (res) {
 						res.data.forEach(function (pokedPerson) {

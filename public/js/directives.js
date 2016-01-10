@@ -44,6 +44,12 @@ angular.module("sog")
   }
 })
 
+.directive('userUpdateForm',function () {
+  return{
+    templateUrl:"partials/user-update-form.html"
+  }
+})
+
 .directive('monkeyModal', function(){
   return{
     templateUrl: "partials/monkey-modal.html"

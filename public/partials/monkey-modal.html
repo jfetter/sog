@@ -5,8 +5,9 @@
   <div class="row">
     <img class="col-sm-6" ng-src="images/evil_monkey.png" alt="" style="max-width: 200px">
     <div class="col-sm-4">
-      <button class="btn btn-danger" type="button" ng-click="showReg()">register</button>
-      <button class="btn btn-danger" type="button" ng-click="showLogin()">login</button>
+      <button ng-if="!loggedIn" class="btn btn-danger" type="button" ng-click="showReg()">register</button>
+      <button ng-if="!loggedIn" class="btn btn-danger" type="button" ng-click="showLogin()">login</button>
+      <button ng-if="loggedIn" class="btn btn-danger" type="button" ng-click="showReg()">Edit</button>
     </div>
   </div>
   <div>

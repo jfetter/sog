@@ -33,7 +33,6 @@ describe('Register The Users', function() {
     })
     .end(function(err, res) {
       if(err) console.error(err);
-      console.log(res.body);
       expect(res).to.have.status(200);
       expect(res.body.email).to.equal('bob@bob.com');
       expect(res.body.name).to.equal('Bob');
@@ -89,7 +88,19 @@ describe('Register The Users', function() {
   });
 });
 
-describe('Receive All The Users', function() {
+describe('Recieve All Users', function() {
+  it('Should Receive All Users', function(done) {
+    chaiApp
+    .get('/user/all')
+    .end(function(err, res) {
+      expect(res).to.have.status(200);
+      expect(res.body.length).to.equal(3);
+      done();
+    });
+  });
+});
+
+describe('Receive All Users One By One', function() {
   it('Should Receive Bob', function(done) {
     chaiApp
     .get(`/user/${userIds.Bob}`)
@@ -100,6 +111,7 @@ describe('Receive All The Users', function() {
       expect(res.body.name).to.equal('Bob');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("341 Bob Lane, Bob St.");
+      expect(res.body.password).to.equal(null);
       done();
     });
   });
@@ -114,6 +126,7 @@ describe('Receive All The Users', function() {
       expect(res.body.name).to.equal('Steve');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Steve Lane, Steve St.");
+      expect(res.body.password).to.equal(null);
       done();
     });
   });
@@ -128,6 +141,7 @@ describe('Receive All The Users', function() {
       expect(res.body.name).to.equal('Jenny');
       expect(res.body.phone).to.equal('555-555-5555');
       expect(res.body.address).to.equal("252 Jenn Lane, Jen St.");
+      expect(res.body.password).to.equal(null);
       userIds.Jenny = res.body._id;
       done();
     });
