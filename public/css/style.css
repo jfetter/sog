@@ -1,8 +1,7 @@
-
-
-
-.navi{
-	background-color: blue;
+button.btn.btn-danger.logoutButton {
+    position: absolute;
+    top: 23%;
+    right: 2%;
 }
 
 .home-body{
@@ -20,20 +19,22 @@
 	color: white;
 	font-weight: bold;
 	}
-/*}*/
 
-/*body, html {
-    height: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
-}*/
+/*#editProfileButton {
+	  position: absolute;
+	  bottom: -23%;
+	}*/
+
+
 /**
  * Profile image component
  */
 .profile-box{
 	margin-top: 1em;
 	margin-bottom: 1em;
-	border: 2px solid black;
+	padding: 3%;
+	border: 2px solid green;
+
 }
 
 .favorites{

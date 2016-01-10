@@ -1,12 +1,13 @@
 <div class="container">
   <div class="row ">
       <div class="col-sm-2 col-md-2 profile-box">
-        <span class="col-sm-12 text-center">{{currentUser.name}}</span>
+    <h3 class="col-sm-12 text-center">{{currentUser.name}}</h3>
           <img ng-src="{{currentUser.avatar}}"
             alt="" class="img-rounded img-responsive" />
-    <span class="col-sm-12 text-center">
-          <a href="#" ng-click="editProfile()">Edit Profile
-        <span class="edit-user glyphicon glyphicon-pencil" ng-show="true"></span></span><a/>
+
+          <button id="editProfileButton" class="btn btn-info" href="#" ng-click="editProfile()">
+            Edit Profile
+        <span class="edit-user glyphicon glyphicon-pencil" ng-show="true"></span></button>
       </div>
     </div>
     <div class="row">

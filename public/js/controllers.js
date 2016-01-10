@@ -102,7 +102,8 @@ angular.module("sog")
   }
 
   // Logout function ////////////
-  $scope.logout = function () {
+  $rootScope.logout = function () {
+
     $rootScope.currentUser = null;
 		$rootScope.email = null;
 		$rootScope.name = null;
@@ -229,6 +230,7 @@ angular.module("sog")
     })
 
   if (localStorage.getItem('token') ) {
+		$rootScope.loggedIn = true;
     var currentUserToken = JSON.parse(localStorage.getItem('token'));
     	$http.post('/user/currentUser', {userToken: currentUserToken})
       	.then(function(res) {
