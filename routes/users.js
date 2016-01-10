@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/user";
 import moment from "moment";
 import jwt from "jwt-simple";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -18,16 +19,13 @@ let createJWT = (user) => {
 //Export me and import me plz
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
-    console.log(users,'all users before map');
   //  let cleanUsers = users.forEach(user => user.password = null);
-    console.log(users,'all users after map');
     res.status(err ? 400:200).send(err || users);
   });
 });
 
 router.get('/poked/:id', (req, res) => {
   let userId = req.params.id;
-  console.log('req params id', userId);
   User.findById( userId, (err, foundUser) => {
     res.status(err ? 400:200).send(err || foundUser.pokes)
   }).populate('pokes')
@@ -55,6 +53,19 @@ router.post('/register', (req, res) => {
   });
 });
 
+router.post('/register/admin/:password', (req, res) => {
+  if(req.params.password === 'ninjaturtles'){
+    req.body.admin = true;
+    console.log(req.body);
+    let user = new User(req.body);
+    user.save((err, savedUser) => {
+      res.status(err ? 400:200).send(err || savedUser);
+    });
+  }else{
+    res.status(err ? 401:200).send(err || 'Wrong password');
+  }
+
+});
 
 router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email },'password', function(err, user) {
@@ -78,14 +89,13 @@ router.post("/poke", (req, res) => {
   let poked = req.body.poked;
   let poker = req.body.poker;
 
-  console.log(req.body)
+
   // DO YOU NEED A LIST OF ALL THE IDS OF ALL THE POKED ONES?
   User.findById(poker, (err, user) => {
     if(err) res.status(400).send(err.message);
     user.pokes.push(poked);
     user.save(user, (err, savedUser) => {
       User.findOne({ _id: savedUser._id }, (err, foundUser) => {
-        console.log(foundUser);
           res.status(err ? 400:200).send(err || foundUser.pokes);
       }).populate('pokes');
     });
@@ -105,9 +115,25 @@ router.post("/unpoke", (req, res) =>{
 });
 
 router.put('/update/:id', (req, res) => {
-  User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
-    res.status(err ? 400:200).send(err || req.body);
-  });
+  if(req.body.password){
+    let user = req.body
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) console.log(err);
+        user.password = hash;
+        User.findByIdAndUpdate(req.params.id, { $set: user }, err => {
+          res.status(err ? 400:200).send(err || 'user updated');
+        });
+      });
+    });
+
+  }else{
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, err => {
+      res.status(err ? 400:200).send(err || req.body);
+    });
+  }
+
+
 });
 
 router.delete('/delete/:id', (req, res) => {

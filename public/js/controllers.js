@@ -9,6 +9,7 @@ angular.module("sog")
 		$state.go('profile')
 	}
 
+
   $scope.images = [];
 
   // for(var i=0; i < 70; i ++){
@@ -135,7 +136,7 @@ angular.module("sog")
   };
 
   $scope.submit = function() {
-
+		// creating a new user via register
 			if(!$scope.loggedIn){
 				let newUser = {}
 		    newUser.email = $scope.email,
@@ -152,6 +153,29 @@ angular.module("sog")
 		      }, function(err) {
 		        if (err) console.log(err);
 		      })
+				// update function for admin
+			}else if ($rootScope.isAdmin){
+				let updateUser = {}
+				updateUser._id = $rootScope.editUserId
+				updateUser.name = $scope.name,
+				updateUser.address = $scope.address,
+				updateUser.password = $scope.password,
+				updateUser.phone = $scope.phone,
+				updateUser.avatar = $scope.imageStrings
+				console.log(updateUser, 'user info being sent to update');
+				$http.put(`/user/update/${$rootScope.editUserId}`, updateUser, null)
+					.then(function(res) {
+						console.log('res from updating user', res.data);
+						$http.get('/user/all/')
+						.then(function (res) {
+							$rootScope.users = res.data;
+						},function (err) {
+							if(err) console.log(err);
+						})
+					}, function(err) {
+						if (err) console.log(err);
+					})
+			// update self via user edit profile
 			}else{
 				let updateUser = {}
 				updateUser.name = $scope.name,
@@ -192,7 +216,20 @@ angular.module("sog")
 
 .controller("profileCtrl", function($rootScope,$scope, $http ,$state, $uibModal, $log) {
 
+
+
 	//Edit System, includes controls for modal and edit functions
+
+	$scope.editUser = function (user) {
+		$rootScope.editUserId = user._id;
+		$rootScope.email = user.email;
+		$rootScope.name = user.name;
+		$rootScope.address = user.address;
+		$rootScope.phone = user.phone;
+
+		$scope.editProfile();
+	}
+
 	$scope.animationsEnabled = true;
   $scope.editProfile = function(size) {
 
@@ -233,6 +270,7 @@ angular.module("sog")
 
   if (localStorage.getItem('token') ) {
 		$rootScope.loggedIn = true;
+		$rootScope.isAdmin = false;
     var currentUserToken = JSON.parse(localStorage.getItem('token'));
     	$http.post('/user/currentUser', {userToken: currentUserToken})
       	.then(function(res) {
@@ -248,6 +286,8 @@ angular.module("sog")
 						$scope.HiddenpokedOnes.push(user._id)
 					})
 
+					$rootScope.isAdmin = checkAdmin($rootScope.currentUser);
+
 					// $http.get(`/user/poked/${res.data._id}`)
 					// .then(function (res) {
 					// 	console.log(res,'user/poked');
@@ -259,7 +299,7 @@ angular.module("sog")
       })
   }
 
-	// filter function ////////////
+
 	$scope.pokeUser = function(user){
 		var poked = user;
 		var poker = $rootScope.currentUser;
@@ -306,7 +346,31 @@ angular.module("sog")
 		}, function(err){
 			console.log(err)
 		})
+	}
 
+
+	//delete user function
+	$scope.deleteUser = function (user) {
+		$http.delete(`user/delete/${user._id}`)
+		.then(function (res) {
+			$http.get('/user/all/')
+			.then(function (res) {
+				$rootScope.users = res.data;
+			},function (err) {
+				if(err) console.log(err);
+			})
+		})
+	}
+
+
+	// check if admin
+	function checkAdmin(currentUser) {
+		console.log('checking admin', currentUser);
+		if(currentUser.admin){
+			return true
+		}else{
+			return false
+		}
 	}
 
 

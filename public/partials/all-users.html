@@ -22,16 +22,18 @@
 
 
 <div ng-repeat="user in users | filter: {name: query} | orderBy: 'name' track by $index">
-    <div class="col-md-8 col-xs-12" ng-hide="user.hide || user._id === currentUser._id || HiddenpokedOnes.indexOf(user._id) != -1" >
+    <div class="col-md-8 col-xs-12" ng-hide="user.hide || user._id === currentUser._id || HiddenpokedOnes.indexOf(user._id) != -1 || user.admin === true"  >
      <!--  dont show ones that have an id that shows in the pokedIds array || pokedOnes.indexOf(user._id) != -1) -->
           <div class="media block-update-card">
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
                   <div class="actionButtons">
-                    <button ng-click="pokeUser(user)" class="btn btn-info">poke <span  class="poker glyphicon glyphicon-hand-up" ng-hide="false"></span></button>
-                    <span class="edit-user glyphicon glyphicon-pencil" ng-show="false"></span>
-                    <span class="edit-user glyphicon glyphicon-trash" ng-show="false"></span>
+                    <button ng-hide="isAdmin" ng-click="pokeUser(user)" class="btn btn-info">poke <div  class="poker glyphicon glyphicon-hand-up" ></div></button>
+                      <br>
+                        <button ng-show="isAdmin" ng-click="editUser(user)" class="btn btn-success">Edit <div  class="edit glyphicon glyphicon-pencil" ></div></button>
+                      <br>
+                    <button ng-show="isAdmin" ng-click="deleteUser(user)" class="btn btn-danger">Delete <div  class="poker glyphicon glyphicon-trash" ></div></button>
                 </div>
 
                     <h3 class="">{{user.name}}</h3>

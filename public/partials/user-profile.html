@@ -5,7 +5,7 @@
           <img ng-src="{{currentUser.avatar}}"
             alt="" class="img-rounded img-responsive" />
 
-          <button id="editProfileButton" class="btn btn-lg btn-info" href="#" ng-click="editProfile()">
+          <button ng-if="!isAdmin" id="editProfileButton" class="btn btn-lg btn-success" href="#" ng-click="editProfile()">
             Edit Profile
         <span class="edit-user glyphicon glyphicon-pencil" ng-show="true"></span></button>
       </div>

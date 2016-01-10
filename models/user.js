@@ -11,7 +11,8 @@ let userSchema = new Schema({
   address: { type: String, require: true },
   phone: { type: String, require: true },
   avatar: { type: String , require: false},
-  pokes: [{ type: Schema.Types.ObjectId, ref: 'User' }] 
+  admin: { type: Boolean, default:false},
+  pokes: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
 userSchema.pre('save', function(next) {
