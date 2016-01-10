@@ -264,11 +264,11 @@ angular.module("sog")
 		$http.post("/user/poke", {poker: poker._id, poked: poked._id})
 		.then(function(res){
 			console.log(res)
-			// res.data.forEach(function (person) {
-			// 	$scope.pokedOnes.push(person);
-			// })
+
+
 			$http.get(`/user/poked/${$rootScope.currentUser._id}`)
 			.then(function (res) {
+				$scope.pokedOnes = [];
 				res.data.forEach(function (pokedPerson) {
 					console.log('pokedPerson', pokedPerson);
 				$scope.pokedOnes.push(pokedPerson)
@@ -277,27 +277,28 @@ angular.module("sog")
 				console.log(err);
 			})
 
-      ////this should push the id of the user into an array
-      //// to check hide status
-			// res.data.forEach(function (person) {
-			// 	$scope.pokedIds.push(person._id);
-			// })
-
 		}, function(err){
 			console.log(err)
 		})
 	}
 
 	$scope.unPoke = function(poked){
-		console.log("poked", poked)
-		var poker = $rootScope.currentUser;
-		console.log(poker, poked)
-		poked.hide = true;
-		$http.post("/user/unpoke", {poker: poker._id, poked: poked._id})
-		.then(function(res){
-			console.log(res)
-			$scope.users.push(res.data)
+		// removes the poked person from the hidden array
+		$scope.HiddenpokedOnes.splice($scope.HiddenpokedOnes.indexOf(poked._id),1)
 
+		var currentUserToken = JSON.parse(localStorage.getItem('token'));
+		var poker = $rootScope.currentUser;
+		poked.hide = true;
+
+		$http.post("/user/unpoke", {poker: poker._id, poked: poked._id})
+		.then(function(resUnpoke){
+			$http({type: 'GET', url: '/user/all'})
+		    .then(function(res) {
+					console.log(res,'all users route');
+		    	$rootScope.users = res.data;
+		    }, function(err) {
+		      console.log(err);
+		    })
 		}, function(err){
 			console.log(err)
 		})

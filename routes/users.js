@@ -95,12 +95,13 @@ router.post("/poke", (req, res) => {
 router.post("/unpoke", (req, res) =>{
   var poked = req.body.poked;
   var poker = req.body.poker;
-  console.log(req.body)
-  res.status(200).send(poked);
-  // REMOVE FROM LIST OF POKED ONES
-  // User.findByIdAndUpdate(poker, {$set: pokeds}, err => {
-  //   res.status(err ? 400:200).send(err || req.body);
-  // })
+
+  User.findById(poker, (err,foundUser) => {
+    foundUser.pokes.splice(foundUser.pokes.indexOf(poked),1)
+    foundUser.save(foundUser, (err ,savedUser) => {
+      res.status(err ? 400:200).send(err || 'removed user');
+    })
+  })
 });
 
 router.put('/update/:id', (req, res) => {
