@@ -4,7 +4,7 @@ angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate","flow","ngStorag
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider){
 	$locationProvider.html5Mode({
-		enabled:true,
+		enabled:false,
 		requireBase: false
 	});
 

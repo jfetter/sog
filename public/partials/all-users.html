@@ -18,25 +18,24 @@
 
 </div> -->
 
-<input ng-model="query" type="text" class="form-control" placeholder="Search">
+<input ng-model="query" type="text" class="form-control" id="userSearch" placeholder="Search">
 
 
 <div ng-repeat="user in users | filter: {name: query} | orderBy: 'name' track by $index">
-    <div class="row" ng-hide="user.hide || user._id === currentUser._id || HiddenpokedOnes.indexOf(user._id) != -1" >
+    <div class="col-md-8 col-xs-12" ng-hide="user.hide || user._id === currentUser._id || HiddenpokedOnes.indexOf(user._id) != -1" >
      <!--  dont show ones that have an id that shows in the pokedIds array || pokedOnes.indexOf(user._id) != -1) -->
-          <div class="profile-header-container">
+          <div class="media block-update-card">
           <div class="profile-header-img">
                   <img class="img-circle" ng-src={{user.avatar}} width="" />
                   <!-- badge -->
-                  <div class="span3 offset1">
-                    poke <span ng-click="pokeUser(user)" class="poker glyphicon glyphicon-hand-up" ng-hide="false"></span>
+                  <div class="actionButtons">
+                    <button ng-click="pokeUser(user)" class="btn btn-info">poke <span  class="poker glyphicon glyphicon-hand-up" ng-hide="false"></span></button>
                     <span class="edit-user glyphicon glyphicon-pencil" ng-show="false"></span>
                     <span class="edit-user glyphicon glyphicon-trash" ng-show="false"></span>
-
                 </div>
-                  <div class="name-label-container">
-                    <span class="label label-default name-label">{{user.name}}</span>
-                  </div>
+
+                    <h3 class="">{{user.name}}</h3>
+
 <!--                   <div class="phone-label-container">
                     <span class="label label-default phone-label">{{user.phone}}</span>
                   </div> -->
@@ -44,4 +43,3 @@
           </div>
     </div>
   </div>
-</div>
