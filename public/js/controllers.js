@@ -76,8 +76,6 @@ angular.module("sog")
 
 
 .controller('loginCtrl', function($rootScope, $scope, $http ,$state) {
-
-  console.log("IN LOGIN CTRL, LOCAL STORAGE TOKEN:", localStorage.token)
   $scope.isLoggedIn = function(){
     // $rootScope.token = {}
     if (localStorage.token){
@@ -157,8 +155,6 @@ angular.module("sog")
 				updateUser.address = $scope.address,
 				updateUser.phone = $scope.phone,
 				updateUser.avatar = $scope.imageStrings
-				console.log(updateUser,'updated user');
-
 				$http.put(`/user/update/${$rootScope.currentUser._id}`, updateUser, null)
 		      .then(function(res) {
 						var currentUserToken = JSON.parse(localStorage.getItem('token'));
@@ -173,9 +169,7 @@ angular.module("sog")
 								$rootScope.pokedOnes = $scope.currentUser.pokes;
 								$http.get(`/user/poked/${res.data._id}`)
 								.then(function (res) {
-									res.data.forEach(function (pokedPerson) {
-										$scope.pokedOnes.push(pokedPerson)
-									})
+									console.log('updated user');
 								},function (err) {
 									console.log(err);
 								})
@@ -196,9 +190,6 @@ angular.module("sog")
 .controller("profileCtrl", function($rootScope,$scope, $http ,$state, $uibModal, $log) {
 
 	//Edit System, includes controls for modal and edit functions
-
-
-
 	$scope.animationsEnabled = true;
   $scope.editProfile = function(size) {
 
@@ -208,7 +199,6 @@ angular.module("sog")
       controller: 'ModalInstanceCtrl',
       size: size,
     });
-
     modalInstance.result.then(function() {
     }, function() {
       $log.info('Modal dismissed at: ' + new Date());
@@ -217,14 +207,13 @@ angular.module("sog")
   $scope.toggleAnimation = function() {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
-
-
-
+	// getting current users, users's poked users, and all users to be poked
 	$rootScope.users = [];
   $scope.currentUser;
-  $scope.pokedOnes = [];
+	$scope.pokedOnes;
+	$scope.HiddenpokedOnes=[];
   $scope.pokedIds = [];
- // $scope.pokedOnes = [{name:'bob', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', _id: 1234 }, {name:'gerty', avatar:'http://www.gettyimages.ca/gi-resources/images/Homepage/Category-Creative/UK/UK_Creative_462809583.jpg', id: 12345 }];
+
 
 	// if not logged in , (no token) goes back to home
 	if (!localStorage.getItem('token') ) {
@@ -233,6 +222,7 @@ angular.module("sog")
 
   $http({type: 'GET', url: '/user/all'})
     .then(function(res) {
+			console.log(res,'all users route');
     	$rootScope.users = res.data;
     }, function(err) {
       console.log(err);
@@ -249,14 +239,17 @@ angular.module("sog")
 					$rootScope.address = $rootScope.currentUser.address
 					$rootScope.phone = $rootScope.currentUser.phone
           $rootScope.pokedOnes = $scope.currentUser.pokes;
-					$http.get(`/user/poked/${res.data._id}`)
-					.then(function (res) {
-						res.data.forEach(function (pokedPerson) {
-							$scope.pokedOnes.push(pokedPerson)
-						})
-					},function (err) {
-						console.log(err);
+
+					$scope.currentUser.pokes.map(function (user) {
+						$scope.HiddenpokedOnes.push(user._id)
 					})
+
+					// $http.get(`/user/poked/${res.data._id}`)
+					// .then(function (res) {
+					// 	console.log(res,'user/poked');
+					// },function (err) {
+					// 	console.log(err);
+					// })
       }, function(err) {
         console.log(err);
       })
@@ -277,7 +270,8 @@ angular.module("sog")
 			$http.get(`/user/poked/${$rootScope.currentUser._id}`)
 			.then(function (res) {
 				res.data.forEach(function (pokedPerson) {
-					$scope.pokedOnes.push(pokedPerson)
+					console.log('pokedPerson', pokedPerson);
+				$scope.pokedOnes.push(pokedPerson)
 				})
 			},function (err) {
 				console.log(err);

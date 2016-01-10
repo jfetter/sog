@@ -18,7 +18,9 @@ let createJWT = (user) => {
 //Export me and import me plz
 router.get('/all', (req, res) => {
   User.find({}, (err, users) => {
-    users = users.map(user => user.password = null);
+    console.log(users,'all users before map');
+  //  let cleanUsers = users.forEach(user => user.password = null);
+    console.log(users,'all users after map');
     res.status(err ? 400:200).send(err || users);
   });
 });
@@ -43,7 +45,7 @@ router.post('/currentUser', (req, res) => {
   User.findById(decoded.sub, (err, user) => {
     user.password = null;
     res.status(err ? 400:200).send(err || user)
-  });
+  }).populate('pokes');
 });
 
 router.post('/register', (req, res) => {
