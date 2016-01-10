@@ -110,6 +110,8 @@ angular.module("sog")
 		$rootScope.address = null;
 		$rootScope.phone = null;
 		$rootScope.pokedOnes = null;
+		$scope.loginEmail = null;
+	  $scope.loginPassword = null;
     localStorage.clear();
     $state.go('home');
   }
