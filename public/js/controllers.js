@@ -54,10 +54,10 @@ angular.module("sog")
 .controller('ModalInstanceCtrl', function($scope, $uibModalInstance) {
   $scope.login = false;
   $scope.register = false;
-  $scope.errors = false; 
+  $scope.errors = false;
 
   $scope.showError = function(err){
-  	$scope.errors = true; 
+  	$scope.errors = true;
     $scope.errorMessages = err;
   }
 
@@ -140,12 +140,12 @@ angular.module("sog")
 		angry={'background-color':'red'}
 	}
 
-	$scope.fileGrabbed = false; 
+	$scope.fileGrabbed = false;
 
   // upload image and base64 encode
   $scope.imageStrings = [];
   $scope.processFiles = function(files) {
-		$scope.fileGrabbed = true; 
+		$scope.fileGrabbed = true;
     angular.forEach(files, function(flowFile, i) {
       var fileReader = new FileReader();
       fileReader.onload = function(event) {
@@ -385,13 +385,16 @@ angular.module("sog")
 		.then(function(resUnpoke){
 			$http({type: 'GET', url: '/user/all'})
 		    .then(function(res) {
-					console.log(res,'all users route');
-		    	$rootScope.users = res.data;
+					res.data = res.data.filter(function (person) {
+						return person._id === poked._id;
+					})
+					$rootScope.users = $rootScope.users.concat(res.data[0]);
+					console.log(res.data);
 		    }, function(err) {
 		      console.log(err);
 		    })
 		}, function(err){
-			console.log(err)
+		console.log(err)
 		})
 	}
 
