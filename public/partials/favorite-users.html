@@ -2,18 +2,23 @@
   <div class="text-center poked-ones">
     <div ng-hide="poked.hide" class="row">
         <span >FOLKS I POKED</span>
-          <div  class="profile-header-container">   
+          <div  class="profile-header-container">
           <div class="poked-img profile-header-img">
                   <img class="img-circle" ng-src={{poked.avatar}} width="" />
                   <!-- badge -->
-                  <div class="unpoke span3 offset1">
-                    <span ng-click="unPoke(poked)" class="glyphicon glyphicon-ban-circle"> </span> <br/>
-                    <span>un-Poke</span>
-                </div>
                   <div class="poked-label-container">
                     <span class="label label-default poked-label">{{poked.name}}</span>
                   </div>
+                  <br><br><br>
+                  <div class="unpoke span3 offset1">
+                    <button id="unPokeButton" ng-hide="isAdmin" ng-click="unPoke(poked)" class="btn btn-info">unpoke
+                      <span  class="glyphicon glyphicon-ban-circle"> </span>
+                    </button>
+
+                    <span>un-Poke</span>
+                </div>
+
               </div>
-          </div> 
+          </div>
     </div>
   </div>
