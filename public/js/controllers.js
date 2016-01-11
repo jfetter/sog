@@ -110,7 +110,7 @@ angular.module("sog")
         if ($scope.$parent.showError)
         	$scope.$parent.showError("Could not find account. Check credentials and try Again");
       	else
-      		alert("Could not find account. Check credentials and try Again");
+      		swal({title: "Accout not found!",text: "Incorrect Username or Password", type: "warning"})
       })
   }
 
