@@ -11,6 +11,6 @@ angular.module("sog", ["ui.router", "ui.bootstrap", "ngAnimate","flow","ngStorag
 	$urlRouterProvider.otherwise("home")
 
 	$stateProvider
-		.state("home", {url: "/home", templateUrl:"views/home.html", controller:"homeCtrl"})
-		.state("profile", {url: "/profile", templateUrl:"views/profile.html", controller:"profileCtrl"})
+		.state("home", {url: "/", templateUrl:"views/home.html", controller:"homeCtrl"})
+		.state("profile", {url: "/", templateUrl:"views/profile.html", controller:"profileCtrl"})
 })
