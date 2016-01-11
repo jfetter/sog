@@ -1,9 +1,13 @@
-# Poke Your Friends!
 
+# Poke Your Friends!
+<hr>
 Poke your friends is a site where you may poke your friends! Find registered users and add them to your poke list!
 Users can also edit thier profile, uploading an image, chaning thier name, etc. Its a simple poker network!
-Find the application [here.](https://dry-mesa-2798.herokuapp.com/) 
+Find the launched application [here.](https://dry-mesa-2798.herokuapp.com/) 
 
+
+## Development
+<hr>
 To install locally:
 ```
   1. Clone this mater repo
