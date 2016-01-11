@@ -9,8 +9,10 @@
       <input type="tel" ng-model="phone" class="form-control phone" placeholder="phone" required>
 
       <div flow-init flow-name="uploader.flow" flow-files-added="processFiles($files)">
-        <input flow-btn type="file">Upload Image</button>
-        <div ng-repeat="image in uploader.flow.files track by $index">
+        <div ng-hide="fileGrabbed">
+          <input  id="image-file" flow-btn type="file" accept="image/*"> <label for="image-file">Upload Image</label>
+        </div>
+          <div ng-repeat="image in uploader.flow.files track by $index">
           <span class="text">{{image.name}}</span>
           <br>
         </div>

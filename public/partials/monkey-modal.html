@@ -1,13 +1,13 @@
 <div class="modal-header">
-  <h3>Not already a member?</h3>
-  <h5 class="modal-title">Dont ANGER the Monkey</h5>
+  <h5 class="modal-title">Dont ANGER the Monkey...</h5>
+  <h3>Login or join!</h3>
 </div>
 <div class="modal-body">
   <div class="row">
     <img class="col-sm-6" ng-src="images/evil_monkey.png" alt="" style="max-width: 200px">
     <div class="col-sm-4">
-      <button ng-if="!loggedIn" class="btn btn-danger" type="button" ng-click="showReg()">register</button>
-      <button ng-if="!loggedIn" class="btn btn-danger" type="button" ng-click="showLogin()">login</button>
+      <button ng-hide="register " class="btn btn-danger" type="button" ng-click="showReg()">register</button>
+      <button ng-hide="login" class="btn btn-danger" type="button" ng-click="showLogin()">login</button>
       <button ng-if="loggedIn" class="btn btn-danger" type="button" ng-click="showReg()">Edit</button>
     </div>
   </div>
