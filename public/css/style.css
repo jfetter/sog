@@ -1,6 +1,7 @@
-body {
-
-
+.error-messages{
+  color:red;
+  text-align: center;
+  font-weight: bold;
 }
 
 .media, .media-body {

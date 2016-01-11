@@ -54,6 +54,12 @@ angular.module("sog")
 .controller('ModalInstanceCtrl', function($scope, $uibModalInstance) {
   $scope.login = false;
   $scope.register = false;
+  $scope.errors = false; 
+
+  $scope.showError = function(err){
+  	$scope.errors = true; 
+    $scope.errorMessages = err;
+  }
 
   $scope.showLogin = function() {
     $scope.login = !$scope.login;
@@ -96,9 +102,16 @@ angular.module("sog")
         if ($scope.$parent.cancel){
           $scope.$parent.cancel();
         }
+        $scope.$parent.errors = false;
 				$state.go('profile');
       }, function(err) {
         console.log(err);
+
+        // display error message on modal
+        if ($scope.$parent.showError)
+        	$scope.$parent.showError("Could not find account. Check credentials and try Again");
+      	else
+      		alert("Could not find account. Check credentials and try Again");
       })
   }
 
@@ -121,6 +134,11 @@ angular.module("sog")
 
 
 .controller('userFormCtrl', function($rootScope, $scope, $window, $http, $state) {
+
+	if ($scope.password != $scope.password2){
+		console.log("passwords do not match")
+		angry={'background-color':'red'}
+	}
 
 	$scope.fileGrabbed = false; 
 
@@ -151,6 +169,7 @@ angular.module("sog")
 
 		// creating a new user via register
 			if(!$scope.loggedIn){
+
 				let newUser = {}
 		    newUser.email = $scope.email,
 		      newUser.password = $scope.password,
@@ -162,9 +181,17 @@ angular.module("sog")
 		    $http.post('/user/register', newUser, null)
 		      .then(function(res) {
 		        console.log(res);
+		        $scope.$parent.errors = false;
 		        $scope.$parent.showLogin();
 		      }, function(err) {
 		        if (err) console.log(err);
+		    			if ($scope.$parent.showError)
+		    				err = err.statusText;
+		    				if (err ="Payload Too Large"){
+		    					err = "image exceeds max file size"
+		    					$scope.fileGrabbed = false;
+		    				}
+        			$scope.$parent.showError(err.statusText);
 		      })
 				// update function for admin
 			}else if ($rootScope.isAdmin){
@@ -183,6 +210,9 @@ angular.module("sog")
 						.then(function (res) {
 							$rootScope.users = res.data;
 						},function (err) {
+
+							if ($scope.$parent.showError)
+        			$scope.$parent.showError(err.statusText);
 							if(err) console.log(err);
 						})
 					}, function(err) {
@@ -211,9 +241,13 @@ angular.module("sog")
 								.then(function (res) {
 									console.log('updated user');
 								},function (err) {
+									if ($scope.$parent.showError)
+        					$scope.$parent.showError(err.statusText);
 									console.log(err);
 								})
 						}, function(err) {
+							  if ($scope.$parent.showError)
+        				$scope.$parent.showError(err.statusText);
 							console.log(err);
 						})
 
